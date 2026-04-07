@@ -11,6 +11,8 @@ import Search from './pages/Search'
 import MovieDetail from './pages/MovieDetail'
 import TvDetail from './pages/TvDetail'
 import Watch from './pages/Watch'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 export default function App() {
   const { pathname } = useLocation()
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/tv/:id" element={<TvDetail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/watch/movie/:id" element={<Watch />} />
         <Route path="/watch/tv/:id/:season/:episode" element={<Watch />} />
         <Route path="/watch/anime/:id" element={<Watch />} />

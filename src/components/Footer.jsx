@@ -61,7 +61,7 @@ export default function Footer() {
           <button className="self-start border border-[#808080]/30 text-[#808080] hover:text-white text-[13px] px-4 py-1.5 rounded transition-colors">
             Service Code
           </button>
-          <p className="text-[#808080]/60 text-[12px]">&copy; {new Date().getFullYear()} Lucky Streaming, Inc.</p>
+          <p className="text-[#808080]/60 text-[12px]">&copy; {new Date().getFullYear()} MovieCafe, Inc.</p>
         </div>
       </div>
     </footer>

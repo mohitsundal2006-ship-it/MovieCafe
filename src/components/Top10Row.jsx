@@ -36,10 +36,10 @@ export default function Top10Row({ title, fetcher }) {
   if (!items.length) return null
 
   return (
-    <div className="mb-6 sm:mb-8">
-      <h2 className="text-white text-sm sm:text-base md:text-lg font-semibold px-4 sm:px-8 md:px-14 mb-1 sm:mb-2">
-        {title}
-      </h2>
+    <div className="mb-6 sm:mb-8 group/row">
+      <div className="px-4 sm:px-8 md:px-14 mb-4 sm:mb-6 mt-4 sm:mt-8">
+        <h2 className="section-title">{title}</h2>
+      </div>
       <div
         ref={rowRef}
         className="flex overflow-x-auto hide-scrollbar px-4 sm:px-8 md:px-14 py-2 sm:py-4"
@@ -58,8 +58,7 @@ export default function Top10Row({ title, fetcher }) {
             >
               {/* Big rank number */}
               <span
-                className="top10-num select-none"
-                style={{ lineHeight: 0.85, marginRight: '-10px', zIndex: 1, flexShrink: 0 }}
+                className="top10-num"
               >
                 {idx + 1}
               </span>

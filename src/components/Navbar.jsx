@@ -10,6 +10,26 @@ export default function Navbar() {
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const searchRef = useRef(null)
+  const profileRef = useRef(null)
+  
+  const [currentUser, setCurrentUser] = useState(null)
+  const [profileOpen, setProfileOpen] = useState(false)
+
+  useEffect(() => {
+    const user = localStorage.getItem('currentUser')
+    if (user) {
+      try {
+        setCurrentUser(JSON.parse(user))
+      } catch (e) {
+        console.error("Error parsing user data", e)
+      }
+    }
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser')
+    window.location.href = '/' // Force reload to apply logout globally
+  }
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
@@ -20,6 +40,16 @@ export default function Navbar() {
   useEffect(() => {
     if (searchOpen && searchRef.current) searchRef.current.focus()
   }, [searchOpen])
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -37,6 +67,7 @@ export default function Navbar() {
     { to: '/tv', label: 'TV Shows' },
     { to: '/anime', label: 'Anime' },
     { to: '/kdrama', label: 'K-Drama' },
+    { to: '/', label: 'Admin' },
   ]
 
   const linkClass = ({ isActive }) =>
@@ -57,10 +88,18 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           to="/"
-          className="text-[#e50914] text-xl sm:text-2xl md:text-[28px] 3xl:text-4xl font-black shrink-0 hover:opacity-90 transition-opacity mr-6 md:mr-10"
-          style={{ fontFamily: '"Bebas Neue", sans-serif', letterSpacing: '3px' }}
+          className="flex items-center gap-3 group shrink-0 mr-6 md:mr-10"
         >
-          LUCKY STREAMING
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#fbbf24] rounded flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.5)] group-hover:scale-110 transition-all duration-300">
+             <div className="flex items-center justify-center transform -translate-x-[0.5px]">
+                <span className="text-black font-black text-xl sm:text-2xl italic leading-none">M</span>
+             </div>
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="text-white text-lg sm:text-xl font-black italic tracking-tighter uppercase flex items-center">
+              Movie<span className="text-[#fbbf24]">Cafe</span>
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Nav Links */}
@@ -139,22 +178,89 @@ export default function Navbar() {
             </div>
           </form>
 
-          {/* Notification Bell */}
-          <button className="hidden md:flex text-white hover:text-white/70 transition-colors p-1.5" aria-label="Notifications">
+          {/* Theme Toggle */}
+          <button className="hidden md:flex text-white hover:text-white/70 transition-colors p-1.5" aria-label="Toggle Theme">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </button>
 
-          {/* Profile */}
-          <div className="hidden md:flex items-center gap-1 cursor-pointer group ml-1">
-            <div className="w-8 h-8 rounded overflow-hidden ring-1 ring-transparent group-hover:ring-white/50 transition-all">
-              <img src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg" alt="Profile" className="w-full h-full object-cover" />
+          {/* Auth Portal / Profile */}
+          {currentUser ? (
+            <div className="hidden md:block relative" ref={profileRef}>
+              <div 
+                className="flex items-center gap-2 group/profile cursor-pointer"
+                onClick={() => setProfileOpen(!profileOpen)}
+              >
+                <div className="flex items-center gap-1.5 bg-black/40 px-2 py-1 rounded-md border border-white/10 hover:bg-black/60 transition-colors">
+                  <div className="w-8 h-8 rounded bg-red-600 flex items-center justify-center text-white font-bold text-xs overflow-hidden shadow-lg border border-white/20">
+                    <img 
+                      src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg" 
+                      alt="Profile" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-3 w-3 text-white/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Dropdown Menu - matches user screenshot exactly */}
+              {profileOpen && (
+                <div className="absolute top-full right-0 mt-2 w-[220px] bg-[#000000]/95 backdrop-blur-md rounded border border-white/10 shadow-2xl overflow-hidden animate-fade-in translate-y-2 z-[60]">
+                   {/* User Details */}
+                   <div className="flex items-center gap-3 px-4 py-4 hover:bg-white/5 transition-colors group cursor-pointer">
+                      <div className="w-8 h-8 rounded bg-red-600 overflow-hidden shadow-md">
+                        <img 
+                          src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg" 
+                          alt="Profile" 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-white text-sm font-bold group-hover:underline">
+                        {currentUser.name || 'Mohit Sundal'}
+                      </span>
+                   </div>
+
+                   {/* Menu Items */}
+                   <div className="flex flex-col py-2 border-t border-white/10">
+                      <Link to="/profile" className="flex items-center gap-4 px-4 py-3 text-white/90 hover:bg-white/5 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span className="text-[14px]">Account</span>
+                      </Link>
+                      <Link to="/help" className="flex items-center gap-4 px-4 py-3 text-white/90 hover:bg-white/5 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-[14px]">Help Centre</span>
+                      </Link>
+                   </div>
+
+                   {/* Sign Out Footer */}
+                   <div className="border-t border-white/20">
+                      <button 
+                        onClick={handleLogout}
+                        className="w-full text-center py-4 text-white hover:bg-white/5 text-sm font-bold transition-colors"
+                      >
+                        Sign out
+                      </button>
+                   </div>
+                </div>
+              )}
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-white transition-transform duration-300 group-hover:rotate-180" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </div>
+          ) : (
+            <div className="hidden md:flex items-center gap-3 ml-2">
+              <Link to="/login" className="text-white text-sm font-bold border border-white/80 px-5 py-2 rounded hover:bg-white hover:text-black transition-colors duration-300">
+                LOGIN
+              </Link>
+              <Link to="/register" className="text-black text-sm font-bold bg-[#fbbf24] border border-[#fbbf24] px-5 py-2 rounded shadow-[0_0_12px_rgba(251,191,36,0.6)] hover:shadow-[0_0_20px_rgba(251,191,36,0.8)] hover:bg-[#f59e0b] transition-all duration-300">
+                SIGN UP
+              </Link>
+            </div>
+          )}
 
           {/* Mobile Hamburger */}
           <button

@@ -23,8 +23,12 @@ import {
 export default function Home() {
   const [heroItems, setHeroItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
+    const user = localStorage.getItem('currentUser')
+    setIsLoggedIn(!!user)
+
     getTrending()
       .then((res) => {
         const results = res.data.results || []
@@ -46,18 +50,18 @@ export default function Home() {
         <ContentRow title="Popular Movies" fetcher={getPopularMovies} mediaType="movie" />
         <Top10Row title="Top 10 in Movies Today" fetcher={getPopularMovies} />
         <ContentRow title="Popular TV Shows" fetcher={getPopularTv} mediaType="tv" />
-        <ContentRow title="Top Rated Movies" fetcher={getTopRatedMovies} mediaType="movie" />
-        <ContentRow title="Anime" fetcher={getAnime} mediaType="tv" />
+        <ContentRow title="Top Rated Movies" fetcher={getTopRatedMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Anime" fetcher={getAnime} mediaType="tv" isRestrictedGrid={!isLoggedIn} />
         <Top10Row title="Top 10 TV Shows Today" fetcher={getTopRatedTv} />
-        <ContentRow title="K-Drama" fetcher={getKDrama} mediaType="tv" />
-        <ContentRow title="Action Movies" fetcher={getActionMovies} mediaType="movie" />
-        <ContentRow title="Comedy" fetcher={getComedyMovies} mediaType="movie" />
-        <ContentRow title="Horror" fetcher={getHorrorMovies} mediaType="movie" />
-        <ContentRow title="Romance" fetcher={getRomanceMovies} mediaType="movie" />
-        <ContentRow title="Sci-Fi" fetcher={getSciFiMovies} mediaType="movie" />
-        <ContentRow title="Top Rated TV" fetcher={getTopRatedTv} mediaType="tv" />
-        <ContentRow title="Documentaries" fetcher={getDocumentaries} mediaType="movie" />
-        <ContentRow title="Thrillers" fetcher={getThrillerMovies} mediaType="movie" />
+        <ContentRow title="K-Drama" fetcher={getKDrama} mediaType="tv" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Action Movies" fetcher={getActionMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Comedy" fetcher={getComedyMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Horror" fetcher={getHorrorMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Romance" fetcher={getRomanceMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Sci-Fi" fetcher={getSciFiMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Top Rated TV" fetcher={getTopRatedTv} mediaType="tv" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Documentaries" fetcher={getDocumentaries} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
+        <ContentRow title="Thrillers" fetcher={getThrillerMovies} mediaType="movie" isRestrictedGrid={!isLoggedIn} />
       </div>
     </div>
   )
