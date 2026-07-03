@@ -2,18 +2,14 @@ import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import MediaCard from './MediaCard'
 
-export default function ContentRow({ title, fetcher, mediaType, isRestrictedGrid = false }) {
+export default function ContentRow({ title, fetcher, mediaType }) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const rowRef = useRef(null)
   const [showLeft, setShowLeft] = useState(false)
   const [showRight, setShowRight] = useState(true)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    const user = localStorage.getItem('currentUser')
-    setIsLoggedIn(!!user)
-    
     let cancelled = false
     fetcher()
       .then((res) => {
@@ -89,29 +85,18 @@ export default function ContentRow({ title, fetcher, mediaType, isRestrictedGrid
         <div
           ref={rowRef}
           onScroll={handleScroll}
-          className={`flex gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar px-4 sm:px-8 md:px-14 py-1 sm:py-3 relative ${isRestrictedGrid ? 'blur-sm opacity-60 pointer-events-none select-none' : ''}`}
+          className="flex gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar px-4 sm:px-8 md:px-14 py-1 sm:py-3 relative"
         >
-          {items.map((item, index) => (
+          {items.map((item) => (
             <MediaCard 
               key={item.id} 
               item={item} 
               mediaType={mediaType} 
-              locked={!isLoggedIn && !isRestrictedGrid && index % 3 === 2} 
             />
           ))}
         </div>
 
-        {isRestrictedGrid && (
-          <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-auto">
-            <div className="bg-black/80 border border-white/20 px-6 py-4 rounded-lg shadow-2xl flex flex-col items-center gap-3 backdrop-blur-md">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#fbbf24]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-              <span className="text-white font-bold tracking-wider text-sm sm:text-base text-center">LOGIN REQUIRED TO VIEW FULL CONTENT</span>
-              <Link to="/login" className="mt-1 bg-[#fbbf24] text-black font-bold text-sm px-6 py-1.5 rounded hover:bg-[#f59e0b] transition-colors">Login Now</Link>
-            </div>
-          </div>
-        )}
+
 
         {/* Right fade + arrow */}
         {showRight && (

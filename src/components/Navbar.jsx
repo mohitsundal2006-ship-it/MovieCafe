@@ -10,26 +10,6 @@ export default function Navbar() {
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const searchRef = useRef(null)
-  const profileRef = useRef(null)
-  
-  const [currentUser, setCurrentUser] = useState(null)
-  const [profileOpen, setProfileOpen] = useState(false)
-
-  useEffect(() => {
-    const user = localStorage.getItem('currentUser')
-    if (user) {
-      try {
-        setCurrentUser(JSON.parse(user))
-      } catch (e) {
-        console.error("Error parsing user data", e)
-      }
-    }
-  }, [])
-
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser')
-    window.location.href = '/' // Force reload to apply logout globally
-  }
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
@@ -40,16 +20,6 @@ export default function Navbar() {
   useEffect(() => {
     if (searchOpen && searchRef.current) searchRef.current.focus()
   }, [searchOpen])
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
-        setProfileOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -185,82 +155,7 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {/* Auth Portal / Profile */}
-          {currentUser ? (
-            <div className="hidden md:block relative" ref={profileRef}>
-              <div 
-                className="flex items-center gap-2 group/profile cursor-pointer"
-                onClick={() => setProfileOpen(!profileOpen)}
-              >
-                <div className="flex items-center gap-1.5 bg-black/40 px-2 py-1 rounded-md border border-white/10 hover:bg-black/60 transition-colors">
-                  <div className="w-8 h-8 rounded bg-red-600 flex items-center justify-center text-white font-bold text-xs overflow-hidden shadow-lg border border-white/20">
-                    <img 
-                      src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg" 
-                      alt="Profile" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-3 w-3 text-white/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </div>
 
-              {/* Dropdown Menu - matches user screenshot exactly */}
-              {profileOpen && (
-                <div className="absolute top-full right-0 mt-2 w-[220px] bg-[#000000]/95 backdrop-blur-md rounded border border-white/10 shadow-2xl overflow-hidden animate-fade-in translate-y-2 z-[60]">
-                   {/* User Details */}
-                   <div className="flex items-center gap-3 px-4 py-4 hover:bg-white/5 transition-colors group cursor-pointer">
-                      <div className="w-8 h-8 rounded bg-red-600 overflow-hidden shadow-md">
-                        <img 
-                          src="https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg" 
-                          alt="Profile" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <span className="text-white text-sm font-bold group-hover:underline">
-                        {currentUser.name || 'Mohit Sundal'}
-                      </span>
-                   </div>
-
-                   {/* Menu Items */}
-                   <div className="flex flex-col py-2 border-t border-white/10">
-                      <Link to="/profile" className="flex items-center gap-4 px-4 py-3 text-white/90 hover:bg-white/5 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <span className="text-[14px]">Account</span>
-                      </Link>
-                      <Link to="/help" className="flex items-center gap-4 px-4 py-3 text-white/90 hover:bg-white/5 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span className="text-[14px]">Help Centre</span>
-                      </Link>
-                   </div>
-
-                   {/* Sign Out Footer */}
-                   <div className="border-t border-white/20">
-                      <button 
-                        onClick={handleLogout}
-                        className="w-full text-center py-4 text-white hover:bg-white/5 text-sm font-bold transition-colors"
-                      >
-                        Sign out
-                      </button>
-                   </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="hidden md:flex items-center gap-3 ml-2">
-              <Link to="/login" className="text-white text-sm font-bold border border-white/80 px-5 py-2 rounded hover:bg-white hover:text-black transition-colors duration-300">
-                LOGIN
-              </Link>
-              <Link to="/register" className="text-black text-sm font-bold bg-[#fbbf24] border border-[#fbbf24] px-5 py-2 rounded shadow-[0_0_12px_rgba(251,191,36,0.6)] hover:shadow-[0_0_20px_rgba(251,191,36,0.8)] hover:bg-[#f59e0b] transition-all duration-300">
-                SIGN UP
-              </Link>
-            </div>
-          )}
 
           {/* Mobile Hamburger */}
           <button
