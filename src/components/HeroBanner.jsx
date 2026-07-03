@@ -109,12 +109,12 @@ export default function HeroBanner({ items }) {
 
       {/* Cycle dots */}
       {list.length > 1 && (
-        <div className="absolute bottom-4 right-4 flex gap-1.5 z-10">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-8 sm:bottom-8 flex gap-2 sm:gap-2.5 z-10">
           {list.map((_, i) => (
             <button
               key={i}
               onClick={() => { setCurrent(i); clearInterval(timerRef.current) }}
-              className={`w-2 h-0.5 rounded-full transition-all duration-300 ${i === current ? 'bg-[#fbbf24] w-4' : 'bg-white/40'}`}
+              className={`p-0 min-w-0 min-h-0 appearance-none border-none rounded-full transition-all duration-300 ${i === current ? 'bg-[#fbbf24] w-6 sm:w-8' : 'bg-white/40 w-2 sm:w-2.5 hover:bg-white/70'} h-2 sm:h-2.5`}
               aria-label={`Show item ${i + 1}`}
             />
           ))}
