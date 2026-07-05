@@ -37,7 +37,6 @@ export default function Navbar() {
     { to: '/tv', label: 'TV Shows' },
     { to: '/anime', label: 'Anime' },
     { to: '/kdrama', label: 'K-Drama' },
-    { to: '/', label: 'Admin' },
   ]
 
   const linkClass = ({ isActive }) =>

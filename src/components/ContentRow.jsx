@@ -116,9 +116,18 @@ export default function ContentRow({ title, fetcher, mediaType }) {
       </div>
 
       <div className="px-4 sm:px-8 md:px-14 mt-4 mb-2 flex justify-center">
-        <button className="border border-[#fbbf24] text-[#fbbf24] font-medium text-sm px-6 py-2 rounded-full hover:bg-[#fbbf24] hover:text-black transition-colors duration-300">
+        <Link 
+          to={(() => {
+            const t = (title || '').toLowerCase();
+            if (t.includes('tv') || mediaType === 'tv') return '/tv';
+            if (t.includes('anime')) return '/anime';
+            if (t.includes('k-drama') || t.includes('kdrama')) return '/kdrama';
+            return '/movies'; // default to movies for trending, popular, action, etc.
+          })()}
+          className="inline-block border border-[#fbbf24] text-[#fbbf24] font-medium text-sm px-6 py-2 rounded-full hover:bg-[#fbbf24] hover:text-black transition-colors duration-300 text-center no-underline"
+        >
           View All {title}
-        </button>
+        </Link>
       </div>
     </div>
   )
