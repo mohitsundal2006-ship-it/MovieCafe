@@ -35,7 +35,7 @@ export function buildMovieEmbedUrl(id, server) {
     case 5:
       return `https://vidsrc.me/embed/movie?tmdb=${id}`;
     case 8:
-      return `https://cinemaos.live/movie/${id}`;
+      return `https://cinemaos.tech/movie/watch/${id}`;
     default:
       return `https://player.autoembed.app/embed/movie/${id}`;
   }
@@ -52,7 +52,7 @@ export function buildTvEmbedUrl(id, season, episode, server) {
     case 5:
       return `https://vidsrc.me/embed/tv?tmdb=${id}&season=${season}&episode=${episode}`;
     case 8:
-      return `https://cinemaos.live/tv/${id}`;
+      return `https://cinemaos.tech/tv/watch/${id}`;
     default:
       return `https://player.autoembed.app/embed/tv/${id}/${season}/${episode}`;
   }
