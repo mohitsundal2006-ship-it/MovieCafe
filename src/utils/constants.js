@@ -10,7 +10,7 @@ export const SERVERS = [
   { id: 5, name: 'Atlas', flag: '🗺️' },
   { id: 6, name: 'Vidsrc', flag: '🍿' },
   { id: 7, name: '2Embed', flag: '🎬' },
-  { id: 8, name: 'Cinemaos', flag: '📺' },
+  { id: 8, name: 'CinemaOS', flag: '📺' },
 ]
 
 export const MEDIA_TYPES = {

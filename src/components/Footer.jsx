@@ -18,6 +18,27 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#141414] border-t border-[#333] mt-16 sm:mt-24">
       <div className="max-w-[1000px] mx-auto px-4 sm:px-8 md:px-14 py-12 sm:py-16">
+        {/* DMCA Disclaimer */}
+        <div className="bg-[#1c1206] border border-[#fbbf24]/10 rounded-xl p-5 mb-10 flex gap-4 items-start shadow-xl">
+          <div className="text-[#fbbf24] mt-0.5 shrink-0 bg-[#fbbf24]/10 p-2 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+              <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5zM12 15a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 15z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <div>
+            <h4 className="text-[#fbbf24] font-semibold text-[15px] mb-2 flex items-center gap-2">
+              Important Disclaimer <span className="text-[#fbbf24]/70 font-normal">¯\_(ツ)_/¯</span>
+            </h4>
+            <p className="text-[#b3b3b3] text-[13px] leading-relaxed mb-4">
+              MovieCafe operates as a content aggregator and does not host any media files on our servers. All content is sourced from third-party providers and embedded services. For any copyright concerns or DMCA takedown requests, please contact the respective content providers directly.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="bg-[#3a2007] text-[#fbbf24]/90 text-[11px] font-medium px-3 py-1 rounded-full border border-[#fbbf24]/20">Third-party Content</span>
+              <span className="bg-[#3a2007] text-[#fbbf24]/90 text-[11px] font-medium px-3 py-1 rounded-full border border-[#fbbf24]/20">No File Hosting</span>
+            </div>
+          </div>
+        </div>
+
         {/* Social icons */}
         <div className="flex items-center gap-5 mb-8">
           {socialIcons.map(({ label, path }) => (

@@ -41,7 +41,7 @@ export function buildMovieEmbedUrl(id, server) {
     case 7:
       return `https://2embed.to/movie/${id}`;
     case 8:
-      return `https://cinemaos.tech/movie/watch/${id}`;
+      return `https://cinemaos.live/movie/watch/${id}`;
     default:
       return `https://player.autoembed.app/embed/movie/${id}`;
   }
@@ -64,7 +64,7 @@ export function buildTvEmbedUrl(id, season, episode, server) {
     case 7:
       return `https://2embed.to/tv/${id}/${season}/${episode}`;
     case 8:
-      return `https://cinemaos.tech/tv/watch/${id}/${season}/${episode}`;
+      return `https://cinemaos.live/tv/watch/${id}/${season}/${episode}`;
     default:
       return `https://player.autoembed.app/embed/tv/${id}/${season}/${episode}`;
   }
