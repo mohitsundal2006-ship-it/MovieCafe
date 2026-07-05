@@ -6,6 +6,7 @@ export const SERVERS = [
   { id: 1, name: 'AE(v2)', flag: '⚡' },
   { id: 2, name: 'Vidfast', flag: '🚀' },
   { id: 3, name: 'Vidnest', flag: '🌐' },
+  { id: 8, name: 'CinemaOS', flag: '📺' },
 ]
 
 export const MEDIA_TYPES = {
