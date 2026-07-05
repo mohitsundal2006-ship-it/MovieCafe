@@ -32,6 +32,8 @@ export function buildMovieEmbedUrl(id, server) {
       return `https://vidfast.pro/movie/${id}`;
     case 3:
       return `https://vidnest.fun/movie/${id}`;
+    case 5:
+      return `https://vidsrc.me/embed/movie?tmdb=${id}`;
     case 8:
       return `https://cinemaos.live/movie/${id}`;
     default:
@@ -47,6 +49,8 @@ export function buildTvEmbedUrl(id, season, episode, server) {
       return `https://vidfast.pro/tv/${id}/${season}/${episode}`;
     case 3:
       return `https://vidnest.fun/tv/${id}/${season}/${episode}`;
+    case 5:
+      return `https://vidsrc.me/embed/tv?tmdb=${id}&season=${season}&episode=${episode}`;
     case 8:
       return `https://cinemaos.live/tv/${id}`;
     default:

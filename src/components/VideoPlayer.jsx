@@ -18,7 +18,6 @@ export default function VideoPlayer({ src }) {
           frameBorder="0"
           referrerPolicy="origin"
           title="Video Player"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
         />
       </div>
     </div>

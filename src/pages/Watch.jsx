@@ -77,11 +77,37 @@ export default function Watch() {
         <div className={`flex gap-4 ${(isTv || isAnime || isDrama) && episodes.length > 0 && sidebarOpen ? 'flex-col lg:flex-row' : ''}`}>
           {/* Player */}
           <div className="flex-1 min-w-0">
-            {embedUrl && <VideoPlayer src={embedUrl} />}
+            {server === 8 ? (
+              <div className="w-full bg-[#181818] rounded-lg overflow-hidden aspect-video flex flex-col items-center justify-center p-6 text-center border border-[#333]">
+                <span className="text-4xl mb-3">📺</span>
+                <h3 className="text-white font-semibold text-base sm:text-lg mb-1">Playing on CinemaOS</h3>
+                <p className="text-gray-400 text-xs sm:text-sm mb-4 max-w-md">
+                  CinemaOS has been opened in a new tab to play this movie in Hindi Dub securely, protecting your current tab from redirects.
+                </p>
+                <a
+                  href={isMovie ? `https://cinemaos.live/movie/${id}` : `https://cinemaos.live/tv/${id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2 bg-white hover:bg-gray-200 text-black font-semibold rounded transition-colors text-sm"
+                >
+                  Open Player in New Tab
+                </a>
+              </div>
+            ) : (
+              embedUrl && <VideoPlayer src={embedUrl} />
+            )}
 
             {/* Server Selector */}
             <div className="mt-3">
-              <ServerSelector currentServer={server} onServerChange={setServer} />
+              <ServerSelector currentServer={server} onServerChange={(serverId) => {
+                setServer(serverId);
+                if (serverId === 8) {
+                  const url = isMovie 
+                    ? `https://cinemaos.live/movie/${id}` 
+                    : `https://cinemaos.live/tv/${id}`;
+                  window.open(url, '_blank');
+                }
+              }} />
             </div>
 
             {/* Episode nav for TV */}
