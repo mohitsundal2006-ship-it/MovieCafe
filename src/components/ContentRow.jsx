@@ -113,9 +113,9 @@ export default function ContentRow({ title, fetcher, mediaType }) {
         <Link 
           to={(() => {
             const t = (title || '').toLowerCase();
-            if (t.includes('tv') || mediaType === 'tv') return '/tv';
             if (t.includes('anime')) return '/anime';
             if (t.includes('k-drama') || t.includes('kdrama')) return '/kdrama';
+            if (t.includes('tv') || mediaType === 'tv') return '/tv';
             return '/movies'; // default to movies for trending, popular, action, etc.
           })()}
           className="inline-block border border-[#fbbf24] text-[#fbbf24] font-medium text-sm px-6 py-2 rounded-full hover:bg-[#fbbf24] hover:text-black transition-colors duration-300 text-center no-underline"

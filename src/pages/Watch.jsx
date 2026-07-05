@@ -30,30 +30,16 @@ export default function Watch() {
     if (isMovie) {
       setEmbedUrl(buildMovieEmbedUrl(id, server))
       getMovieDetail(id).then((res) => { setTitle(res.data.title); setMediaInfo(res.data) }).catch(() => {})
-    } else if (isTv) {
-      setEmbedUrl(buildTvEmbedUrl(id, season, episode, server))
+    } else if (isTv || isAnime || isDrama) {
+      setEmbedUrl(buildTvEmbedUrl(id, currentSeason, currentEp, server))
       getTvDetail(id).then((res) => {
-        setTitle(`${res.data.name} · S${season}E${episode}`)
+        setTitle(`${res.data.name} · S${currentSeason}E${currentEp}`)
         setMediaInfo(res.data)
         // Load episode list
-        getTvSeason(id, season).then(s => setEpisodes(s.data.episodes || [])).catch(() => {})
-      }).catch(() => {})
-    } else if (isAnime || isDrama) {
-      const ep = searchParams.get('episode') || '1'
-      getTvDetail(id).then((res) => {
-        const show = res.data
-        const name = show.name || show.original_name
-        const year = getYear(show.first_air_date)
-        const slug = generateSlug(name, year)
-        setTitle(`${name} · Episode ${ep}`)
-        setMediaInfo(show)
-        if (isAnime) setEmbedUrl(buildAnimeEmbedUrl(slug, ep, server))
-        else setEmbedUrl(buildDramaEmbedUrl(slug, ep, server))
-        // Load episode list for season 1 by default
         getTvSeason(id, currentSeason).then(s => setEpisodes(s.data.episodes || [])).catch(() => {})
       }).catch(() => {})
     }
-  }, [id, season, episode, server, isMovie, isTv, isAnime, isDrama, searchParams])
+  }, [id, season, episode, server, isMovie, isTv, isAnime, isDrama, searchParams, currentSeason, currentEp])
 
   const backPath = isMovie ? `/movie/${id}` : `/tv/${id}`
 

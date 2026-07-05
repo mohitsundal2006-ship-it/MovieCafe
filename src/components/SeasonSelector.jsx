@@ -34,10 +34,7 @@ export default function SeasonSelector({ seasons, episodes, selectedSeason, onSe
       {/* Episode list */}
       <div className="space-y-2 sm:space-y-2.5">
         {episodes?.map((ep) => {
-          let watchPath
-          if (isAnime) watchPath = `/watch/anime/${showId}?episode=${ep.episode_number}&season=${selectedSeason}`
-          else if (isDrama) watchPath = `/watch/drama/${showId}?episode=${ep.episode_number}&season=${selectedSeason}`
-          else watchPath = `/watch/tv/${showId}/${selectedSeason}/${ep.episode_number}`
+          let watchPath = `/watch/tv/${showId}/${selectedSeason}/${ep.episode_number}`
 
           return (
             <Link
