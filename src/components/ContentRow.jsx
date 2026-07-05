@@ -56,12 +56,6 @@ export default function ContentRow({ title, fetcher, mediaType }) {
       {/* Row Header */}
       <div className="flex items-center gap-2 px-4 sm:px-8 md:px-14 mb-4 sm:mb-6 mt-4 sm:mt-8">
         <h2 className="section-title">{title}</h2>
-        <span className="text-[#fbbf24] text-xs font-semibold opacity-0 group-hover/row:opacity-100 transition-all duration-300 flex items-center gap-1 cursor-pointer hover:underline">
-          Explore All
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </span>
       </div>
 
       <div className="relative">
@@ -115,6 +109,20 @@ export default function ContentRow({ title, fetcher, mediaType }) {
         )}
       </div>
 
+      <div className="px-4 sm:px-8 md:px-14 mt-4 mb-2 flex justify-center">
+        <Link 
+          to={(() => {
+            const t = (title || '').toLowerCase();
+            if (t.includes('tv') || mediaType === 'tv') return '/tv';
+            if (t.includes('anime')) return '/anime';
+            if (t.includes('k-drama') || t.includes('kdrama')) return '/kdrama';
+            return '/movies'; // default to movies for trending, popular, action, etc.
+          })()}
+          className="inline-block border border-[#fbbf24] text-[#fbbf24] font-medium text-sm px-6 py-2 rounded-full hover:bg-[#fbbf24] hover:text-black transition-colors duration-300 text-center no-underline"
+        >
+          View All {title}
+        </Link>
+      </div>
     </div>
   )
 }
