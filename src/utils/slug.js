@@ -32,16 +32,6 @@ export function buildMovieEmbedUrl(id, server) {
       return `https://vidfast.pro/movie/${id}`;
     case 3:
       return `https://vidnest.fun/movie/${id}`;
-    case 4:
-      return `https://vidpro.pro/movie/${id}`;
-    case 5:
-      return `https://atlas-v2.com/movie/${id}`;
-    case 6:
-      return `https://vidsrc.to/movie/${id}`;
-    case 7:
-      return `https://2embed.to/movie/${id}`;
-    case 8:
-      return `https://cinemaos.live/movie/watch/${id}`;
     default:
       return `https://player.autoembed.app/embed/movie/${id}`;
   }
@@ -55,16 +45,6 @@ export function buildTvEmbedUrl(id, season, episode, server) {
       return `https://vidfast.pro/tv/${id}/${season}/${episode}`;
     case 3:
       return `https://vidnest.fun/tv/${id}/${season}/${episode}`;
-    case 4:
-      return `https://vidpro.pro/tv/${id}/${season}/${episode}`;
-    case 5:
-      return `https://atlas-v2.com/tv/${id}/${season}/${episode}`;
-    case 6:
-      return `https://vidsrc.to/tv/${id}/${season}/${episode}`;
-    case 7:
-      return `https://2embed.to/tv/${id}/${season}/${episode}`;
-    case 8:
-      return `https://cinemaos.live/tv/${id}`;
     default:
       return `https://player.autoembed.app/embed/tv/${id}/${season}/${episode}`;
   }
