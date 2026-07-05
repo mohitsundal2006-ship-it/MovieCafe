@@ -64,7 +64,7 @@ export function buildTvEmbedUrl(id, season, episode, server) {
     case 7:
       return `https://2embed.to/tv/${id}/${season}/${episode}`;
     case 8:
-      return `https://cinemaos.live/tv/watch/${id}/${season}/${episode}`;
+      return `https://cinemaos.live/tv/${id}`;
     default:
       return `https://player.autoembed.app/embed/tv/${id}/${season}/${episode}`;
   }
