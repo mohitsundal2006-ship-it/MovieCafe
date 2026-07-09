@@ -2,7 +2,7 @@ export default function VideoPlayer({ src }) {
   if (!src) {
     return (
       <div className="w-full flex justify-center">
-        <div className="w-full bg-[#181818] shadow-2xl aspect-video max-h-[75vh] flex items-center justify-center">
+        <div className="w-full bg-[#181818] shadow-2xl aspect-video flex items-center justify-center">
           <p className="text-gray-400">Loading player...</p>
         </div>
       </div>
@@ -11,7 +11,7 @@ export default function VideoPlayer({ src }) {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full bg-black shadow-2xl relative aspect-video max-h-[75vh]">
+      <div className="w-full bg-black shadow-2xl relative aspect-video">
         <iframe
           src={src}
           className="absolute inset-0 w-full h-full"
