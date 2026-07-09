@@ -2,10 +2,7 @@ export default function VideoPlayer({ src }) {
   if (!src) {
     return (
       <div className="w-full flex justify-center">
-        <div 
-          className="w-full bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
-          style={{ maxWidth: 'calc(80vh * (16 / 9))' }}
-        >
+        <div className="w-full bg-[#181818] rounded-lg overflow-hidden shadow-2xl">
           <div className="relative w-full aspect-video flex items-center justify-center">
             <p className="text-gray-400">Loading player...</p>
           </div>
@@ -16,10 +13,7 @@ export default function VideoPlayer({ src }) {
 
   return (
     <div className="w-full flex justify-center">
-      <div 
-        className="w-full bg-black rounded-lg overflow-hidden shadow-2xl"
-        style={{ maxWidth: 'calc(80vh * (16 / 9))' }}
-      >
+      <div className="w-full bg-black rounded-lg overflow-hidden shadow-2xl">
         <div className="relative w-full aspect-video">
           <iframe
             src={src}
@@ -35,4 +29,5 @@ export default function VideoPlayer({ src }) {
     </div>
   )
 }
+
 
