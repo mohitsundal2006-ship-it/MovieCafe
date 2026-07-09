@@ -3,10 +3,12 @@ export default function VideoPlayer({ src }) {
     return (
       <div className="w-full flex justify-center">
         <div 
-          className="w-full bg-[#181818] rounded-xl overflow-hidden aspect-video flex items-center justify-center"
-          style={{ maxHeight: '80vh', maxWidth: 'calc(80vh * 16 / 9)' }}
+          className="w-full bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
+          style={{ maxWidth: 'calc(80vh * (16 / 9))' }}
         >
-          <p className="text-gray-400">Loading player...</p>
+          <div className="relative w-full aspect-video flex items-center justify-center">
+            <p className="text-gray-400">Loading player...</p>
+          </div>
         </div>
       </div>
     )
@@ -15,19 +17,22 @@ export default function VideoPlayer({ src }) {
   return (
     <div className="w-full flex justify-center">
       <div 
-        className="w-full bg-black rounded-xl overflow-hidden shadow-2xl relative aspect-video"
-        style={{ maxHeight: '80vh', maxWidth: 'calc(80vh * 16 / 9)' }}
+        className="w-full bg-black rounded-lg overflow-hidden shadow-2xl"
+        style={{ maxWidth: 'calc(80vh * (16 / 9))' }}
       >
-        <iframe
-          src={src}
-          className="absolute inset-0 w-full h-full"
-          allowFullScreen
-          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-          frameBorder="0"
-          referrerPolicy="origin"
-          title="Video Player"
-        />
+        <div className="relative w-full aspect-video">
+          <iframe
+            src={src}
+            className="absolute inset-0 w-full h-full"
+            allowFullScreen
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            frameBorder="0"
+            referrerPolicy="origin"
+            title="Video Player"
+          />
+        </div>
       </div>
     </div>
   )
 }
+
